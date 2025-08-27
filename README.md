@@ -30,13 +30,13 @@ Toda a infraestrutura, tanto na região primária quanto na de DR, foi provision
 
 ### Como Executar
 
-\`\`\`bash
+```bash
 cd terraform      # ou terraform-dr
 # Preencha o arquivo terraform.tfvars com as credenciais
 terraform init
 terraform plan
 terraform apply
-\`\`\`
+```
 
 ---
 
@@ -88,22 +88,22 @@ O **OCI Full Stack DR (FSDR)** foi configurado para orquestrar failover entre re
 ### Item 1: Cluster Kubernetes (OKE) com Aplicação Web
 - **Arquivos YAML:** `k8s-manifests/`  
 - **Obter IP público do Load Balancer:**
-  \`\`\`bash
+  ```bash
   kubectl get svc -n ingress-nginx
-  \`\`\`
+  ```
 - **Listar recursos no namespace da aplicação:**
-  \`\`\`bash
+  ```bash
   kubectl get all -n app-producao
-  \`\`\`
+  ```
 
 ---
 
 ### Item 2: Instance MySQL em PaaS
 - **Scripts Terraform:** `terraform/` e `terraform-dr/`  
 - **Dump da base:**
-  \`\`\`bash
+  ```bash
   mysqldump -h 127.0.0.1 -u admin -p webappdb > dump.sql
-  \`\`\`
+  ```
 - **Conexão no Deployment:** `secret.yaml`, `configmap.yaml`, `deployment.yaml`  
 - **Validação:** Print da aplicação exibindo variáveis de conexão.  
 

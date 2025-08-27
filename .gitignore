@@ -1,0 +1,23 @@
+# Arquivos de estado local do Terraform
+# Contêm informações sensíveis e estado da infraestrutura.
+terraform.tfstate
+terraform.tfstate.backup
+
+# Arquivos de variáveis locais com credenciais
+# NUNCA comitar arquivos .tfvars que contenham segredos.
+*.tfvars
+
+# Diretório .terraform que contém plugins e módulos
+# Ele é recriado localmente com 'terraform init'.
+.terraform/
+
+# Logs de crash
+crash.log
+
+# Arquivos de override que podem conter informações locais
+*.tf.override
+*.tf.json.override
+
+# Arquivos de CLI config
+.terraformrc
+terraform.rc

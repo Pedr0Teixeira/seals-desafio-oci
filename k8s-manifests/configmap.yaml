@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: app-producao
+data:
+  DB_HOST: "10.0.20.77" # IP interno do serviço MySQL no cluster
+  DB_PORT: "3306"
+  DB_NAME: "webappdb" # Nome do banco de dados

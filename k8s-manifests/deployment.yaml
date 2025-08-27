@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+  namespace: app-producao
+  labels:
+    app: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: mysql-credentials
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          echo "<html><head><title>Desafio OCI</title></head><body><h1>Pod: $HOSTNAME</h1><h2>Configurações do Banco:</h2><p>DB_HOST: $DB_HOST</p><p>DB_PORT: $DB_PORT</p><p>DB_NAME: $DB_NAME</p><p>DB_USER: $DB_USER</p></body></html>" > /usr/share/nginx/html/index.html;
+          nginx -g 'daemon off;';

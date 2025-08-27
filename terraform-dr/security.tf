@@ -4,7 +4,7 @@
 resource "oci_core_network_security_group" "nsg_lb_seals" {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.vcn_seals_prod.id
-  display_name   = "NSG_LB_SEALS_PROD_SP"
+  display_name   = "NSG_LB_SEALS_PROD_VH"
 }
 resource "oci_core_network_security_group_security_rule" "nsg_lb_ingress_https" {
   network_security_group_id = oci_core_network_security_group.nsg_lb_seals.id
@@ -43,7 +43,7 @@ resource "oci_core_network_security_group_security_rule" "nsg_lb_egress_to_oke_n
 resource "oci_core_network_security_group" "nsg_bastion_seals" {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.vcn_seals_prod.id
-  display_name   = "NSG_BASTION_SEALS_PROD_SP"
+  display_name   = "NSG_BASTION_SEALS_PROD_VH"
 }
 resource "oci_core_network_security_group_security_rule" "nsg_bastion_ingress_ssh" {
   network_security_group_id = oci_core_network_security_group.nsg_bastion_seals.id
@@ -67,7 +67,7 @@ resource "oci_core_network_security_group_security_rule" "nsg_bastion_ingress_ss
 resource "oci_core_network_security_group" "nsg_oke_api_seals" {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.vcn_seals_prod.id
-  display_name   = "NSG_OKE_API_SEALS_PROD_SP"
+  display_name   = "NSG_OKE_API_SEALS_PROD_VH"
 }
 resource "oci_core_network_security_group_security_rule" "nsg_oke_api_ingress_from_nodes" {
   network_security_group_id = oci_core_network_security_group.nsg_oke_api_seals.id
@@ -97,7 +97,7 @@ resource "oci_core_network_security_group_security_rule" "nsg_oke_api_egress_to_
 resource "oci_core_network_security_group" "nsg_oke_nodes_seals" {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.vcn_seals_prod.id
-  display_name   = "NSG_OKE_NODES_SEALS_PROD_SP"
+  display_name   = "NSG_OKE_NODES_SEALS_PROD_VH"
 }
 resource "oci_core_network_security_group_security_rule" "nsg_oke_nodes_egress_all" {
   network_security_group_id = oci_core_network_security_group.nsg_oke_nodes_seals.id
@@ -148,7 +148,7 @@ resource "oci_core_network_security_group_security_rule" "nsg_oke_nodes_ingress_
 resource "oci_core_network_security_group" "nsg_mysql_seals" {
   compartment_id = var.compartment_id
   vcn_id         = oci_core_vcn.vcn_seals_prod.id
-  display_name   = "NSG_MYSQL_SEALS_PROD_SP"
+  display_name   = "NSG_MYSQL_SEALS_PROD_VH"
 }
 resource "oci_core_network_security_group_security_rule" "nsg_mysql_ingress_from_oke" {
   network_security_group_id = oci_core_network_security_group.nsg_mysql_seals.id
@@ -182,14 +182,14 @@ tcp_options {
 }
 }
 
-resource "oci_core_network_security_group_security_rule" "nsg_mysql_egress_to_dr" {
+resource "oci_core_network_security_group_security_rule" "nsg_mysql_ingress_from_primary" {
   network_security_group_id = oci_core_network_security_group.nsg_mysql_seals.id
-  direction                 = "EGRESS"
+  direction                 = "INGRESS"
   protocol                  = "6" # TCP
-  destination_type          = "CIDR_BLOCK"
-  destination               = "10.1.0.0/16" # CIDR da VCN de VH
+  source_type               = "CIDR_BLOCK"
+  source                    = "10.0.0.0/16" # CIDR da VCN de SP
   stateless                 = false
-  description               = "Permite tráfego de saída para replicação do MySQL para a região de DR."
+  description               = "Permite tráfego de replicação do MySQL da região de SP."
 
   tcp_options {
     destination_port_range {

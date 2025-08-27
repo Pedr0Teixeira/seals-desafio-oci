@@ -1,23 +1,39 @@
-# Arquivos de estado local do Terraform
-# Contêm informações sensíveis e estado da infraestrutura.
+# ===================================================================
+# Arquivo .gitignore para o projeto Desafio SEALS OCI
+# ===================================================================
+
+# Arquivos de Estado e Cache do Terraform (NUNCA DEVEM IR PARA O GIT)
+# Contêm o estado da sua infraestrutura e podem ter dados sensíveis.
 terraform.tfstate
 terraform.tfstate.backup
+.terraform/
+.terraform.lock.hcl
 
-# Arquivos de variáveis locais com credenciais
-# NUNCA comitar arquivos .tfvars que contenham segredos.
+# Arquivos de Variáveis do Terraform (Frequentemente contêm segredos)
+# É uma boa prática não versionar o arquivo de variáveis principal.
+terraform.tfvars
 *.tfvars
 
-# Diretório .terraform que contém plugins e módulos
-# Ele é recriado localmente com 'terraform init'.
-.terraform/
+# Planos do Terraform (Podem conter informações sensíveis)
+*.tfplan
 
-# Logs de crash
+# Chaves e Segredos Gerais
+*.pem
+*.key
+id_rsa*
+
+# Configuração do Kubernetes (Contém credenciais de acesso ao cluster)
+kubeconfig
+
+# Arquivos de Log de Crash
 crash.log
+crash.*.log
 
-# Arquivos de override que podem conter informações locais
-*.tf.override
-*.tf.json.override
+# Arquivos de Sistema Operacional
+.DS_Store
+Thumbs.db
 
-# Arquivos de CLI config
-.terraformrc
-terraform.rc
+# Arquivos de IDEs e Editores
+.vscode/
+.idea/
+*.swp

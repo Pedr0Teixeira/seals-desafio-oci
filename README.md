@@ -112,7 +112,6 @@ O **OCI Full Stack DR (FSDR)** foi configurado para orquestrar failover entre re
 ### Item 3: Load Balancer com WAF
 - **IP público:** mesmo do Item 1.  
 - **Política WAF:** Navegar em *Identity & Security > WAF > WAF_Policy_Seals*.  
-- **Teste de bloqueio (403 Forbidden):** Criar regra de bloqueio para IP atual.  
 
 ---
 
@@ -121,7 +120,6 @@ O **OCI Full Stack DR (FSDR)** foi configurado para orquestrar failover entre re
 - **DR Plan:** Print mostrando passos.  
 - **Replicação MySQL:** Canal ativo em Vinhedo.  
 - **Aplicação no DR:** Mesmos `k8s-manifests/`.  
-- **Execução:** Prints de *Run Prechecks* + *Execute DR Plan (DR Drill)*.  
 
 ---
 

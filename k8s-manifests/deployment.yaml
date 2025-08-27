@@ -25,8 +25,153 @@ spec:
             name: app-config
         - secretRef:
             name: mysql-credentials
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        # Comando para gerar a página HTML moderna
         command: ["/bin/sh", "-c"]
         args:
         - |
-          echo "<html><head><title>Desafio OCI</title></head><body><h1>Pod: $HOSTNAME</h1><h2>Configurações do Banco:</h2><p>DB_HOST: $DB_HOST</p><p>DB_PORT: $DB_PORT</p><p>DB_NAME: $DB_NAME</p><p>DB_USER: $DB_USER</p></body></html>" > /usr/share/nginx/html/index.html;
+          cat <<EOF > /usr/share/nginx/html/index.html
+          <!DOCTYPE html>
+          <html lang="pt-br">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Desafio OCI | Aplicação OKE</title>
+              <link rel="preconnect" href="https://fonts.googleapis.com">
+              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+              <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+              <style>
+                  body {
+                      font-family: 'Poppins', sans-serif;
+                      background: linear-gradient(135deg, #1e3a8a, #0c1a4d);
+                      color: #e0e7ff;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      height: 100vh;
+                      margin: 0;
+                      font-size: 16px;
+                  }
+                  .container {
+                      background-color: rgba(23, 37, 84, 0.8);
+                      padding: 2.5rem;
+                      border-radius: 15px;
+                      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+                      width: 90%;
+                      max-width: 650px;
+                      border: 1px solid rgba(129, 140, 248, 0.3);
+                      backdrop-filter: blur(10px);
+                  }
+                  h1 {
+                      color: #a5b4fc;
+                      text-align: center;
+                      margin-bottom: 2rem;
+                      font-weight: 600;
+                  }
+                  .info-grid {
+                      display: grid;
+                      grid-template-columns: 1fr;
+                      gap: 1.5rem;
+                  }
+                  .info-section {
+                      background: rgba(30, 41, 59, 0.5);
+                      padding: 1.5rem;
+                      border-radius: 10px;
+                  }
+                  h2 {
+                      margin-top: 0;
+                      color: #818cf8;
+                      border-bottom: 1px solid #4f46e5;
+                      padding-bottom: 0.5rem;
+                      margin-bottom: 1rem;
+                      font-size: 1.2rem;
+                  }
+                  .info-item {
+                      display: flex;
+                      justify-content: space-between;
+                      padding: 0.5rem 0;
+                      border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+                  }
+                  .info-item:last-child {
+                      border-bottom: none;
+                  }
+                  .info-key {
+                      font-weight: 300;
+                      color: #94a3b8;
+                  }
+                  .info-value {
+                      font-weight: 400;
+                      color: #e2e8f0;
+                      word-break: break-all;
+                  }
+                  @media (min-width: 600px) {
+                      .info-grid {
+                          grid-template-columns: 1fr 1fr;
+                      }
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>🚀 Desafio OCI - Aplicação no OKE</h1>
+                  <div class="info-grid">
+                      <div class="info-section">
+                          <h2>Informações do Pod</h2>
+                          <div class="info-item">
+                              <span class="info-key">Nome do Pod:</span>
+                              <span class="info-value">\${POD_NAME}</span>
+                          </div>
+                          <div class="info-item">
+                              <span class="info-key">IP do Pod:</span>
+                              <span class="info-value">\${POD_IP}</span>
+                          </div>
+                           <div class="info-item">
+                              <span class="info-key">Namespace:</span>
+                              <span class="info-value">\${POD_NAMESPACE}</span>
+                          </div>
+                          <div class="info-item">
+                              <span class="info-key">Worker Node:</span>
+                              <span class="info-value">\${NODE_NAME}</span>
+                          </div>
+                      </div>
+                      <div class="info-section">
+                          <h2>Ambiente & Conexão</h2>
+                          <div class="info-item">
+                              <span class="info-key">DB Host:</span>
+                              <span class="info-value">\${DB_HOST}</span>
+                          </div>
+                          <div class="info-item">
+                              <span class="info-key">DB Port:</span>
+                              <span class="info-value">\${DB_PORT}</span>
+                          </div>
+                           <div class="info-item">
+                              <span class="info-key">DB Name:</span>
+                              <span class="info-value">\${DB_NAME}</span>
+                          </div>
+                           <div class="info-item">
+                              <span class="info-key">DB User:</span>
+                              <span class="info-value">\${DB_USER}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </body>
+          </html>
+          EOF
           nginx -g 'daemon off;';

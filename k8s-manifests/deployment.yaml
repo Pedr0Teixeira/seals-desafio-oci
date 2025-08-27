@@ -52,7 +52,7 @@ spec:
           <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Desafio OCI | Aplicação OKE</title>
+              <title>Desafio SEALS OCI</title>
               <link rel="preconnect" href="https://fonts.googleapis.com">
               <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
               <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -129,44 +129,44 @@ spec:
           </head>
           <body>
               <div class="container">
-                  <h1>🚀 Desafio OCI - Aplicação no OKE</h1>
+                  <h1>🚀 Desafio SEALS OCI</h1>
                   <div class="info-grid">
                       <div class="info-section">
                           <h2>Informações do Pod</h2>
                           <div class="info-item">
                               <span class="info-key">Nome do Pod:</span>
-                              <span class="info-value">\${POD_NAME}</span>
+                              <span class="info-value">${POD_NAME}</span>
                           </div>
                           <div class="info-item">
                               <span class="info-key">IP do Pod:</span>
-                              <span class="info-value">\${POD_IP}</span>
+                              <span class="info-value">${POD_IP}</span>
                           </div>
                            <div class="info-item">
                               <span class="info-key">Namespace:</span>
-                              <span class="info-value">\${POD_NAMESPACE}</span>
+                              <span class="info-value">${POD_NAMESPACE}</span>
                           </div>
                           <div class="info-item">
                               <span class="info-key">Worker Node:</span>
-                              <span class="info-value">\${NODE_NAME}</span>
+                              <span class="info-value">${NODE_NAME}</span>
                           </div>
                       </div>
                       <div class="info-section">
                           <h2>Ambiente & Conexão</h2>
                           <div class="info-item">
                               <span class="info-key">DB Host:</span>
-                              <span class="info-value">\${DB_HOST}</span>
+                              <span class="info-value">${DB_HOST}</span>
                           </div>
                           <div class="info-item">
                               <span class="info-key">DB Port:</span>
-                              <span class="info-value">\${DB_PORT}</span>
+                              <span class="info-value">${DB_PORT}</span>
                           </div>
                            <div class="info-item">
                               <span class="info-key">DB Name:</span>
-                              <span class="info-value">\${DB_NAME}</span>
+                              <span class="info-value">${DB_NAME}</span>
                           </div>
                            <div class="info-item">
                               <span class="info-key">DB User:</span>
-                              <span class="info-value">\${DB_USER}</span>
+                              <span class="info-value">${DB_USER}</span>
                           </div>
                       </div>
                   </div>

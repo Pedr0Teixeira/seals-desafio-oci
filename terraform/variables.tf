@@ -23,3 +23,6 @@ variable "db_password" {
 variable "admin_source_ip" {
   description = "O endereço IP ou CIDR do administrador para permitir acesso SSH ao Bastion."
 }
+variable "ssh_public_key_path" {
+  description = "Caminho para a chave SSH pública a ser usada no Bastion Host."
+}

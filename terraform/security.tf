@@ -52,7 +52,7 @@ resource "oci_core_network_security_group_security_rule" "nsg_bastion_ingress_ss
   source_type               = "CIDR_BLOCK"
   source                    = var.admin_source_ip
   stateless                 = false
-  description               = "Permite acesso SSH apenas do IP do administrador."
+  description               = "Permite acesso SSH apenas do IP do Jumper."
   tcp_options {
     destination_port_range {
       max = 22
@@ -164,4 +164,20 @@ resource "oci_core_network_security_group_security_rule" "nsg_mysql_ingress_from
       min = 3306
     }
   }
+}
+resource "oci_core_network_security_group_security_rule" "nsg_oke_nodes_ingress_from_bastion" {
+network_security_group_id = oci_core_network_security_group.nsg_oke_nodes_seals.id
+direction                 = "INGRESS"
+protocol                  = "6" # TCP
+source_type               = "CIDR_BLOCK"
+source                    = oci_core_subnet.snet_lb_public_seals.cidr_block
+stateless                 = false
+description               = "Permite acesso SSH do Serviço Bastion para os nós do OKE."
+
+tcp_options {
+  destination_port_range {
+    max = 22
+    min = 22
+  }
+}
 }

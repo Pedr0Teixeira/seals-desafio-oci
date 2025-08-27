@@ -4,6 +4,7 @@ metadata:
   name: web-app-ingress
   namespace: app-producao
 spec:
+  ingressClassName: nginx
   rules:
   - http:
       paths:
